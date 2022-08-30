@@ -18,12 +18,12 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/configure-pages@v2
       - run: ./build.sh
       - uses: actions/upload-pages-artifact@v1
         with:
           path: ./build/webroot
   web-deploy:
+    name: Deploy to GitHub Pages
     needs: web
     permissions:
       pages: write  # To deploy to Pages
@@ -39,5 +39,6 @@ jobs:
       cancel-in-progress: true
     runs-on: ubuntu-18.04
     steps:
+    - uses: actions/configure-pages@v2
     - uses: actions/deploy-pages@v1
       id: deployment
