@@ -22,10 +22,6 @@ jobs:
         with:
           path: ./build/webroot
       - uses: actions/deploy-pages@v1
-        id: deployment
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     # Allow one concurrent deployment
     concurrency:
       group: "pages"
