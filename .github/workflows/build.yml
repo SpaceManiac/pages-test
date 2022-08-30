@@ -5,6 +5,14 @@ on:
   pull_request:
 
 jobs:
+  windows:
+    name: Windows (MSVC)
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v2
+    environment:
+      name: itch
+      url: https://spacemaniac.itch.io/nonexistent
   web:
     name: Web
     runs-on: ubuntu-18.04
