@@ -4,12 +4,6 @@ on:
   push:
   pull_request:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 jobs:
   web:
     name: Web
@@ -21,8 +15,21 @@ jobs:
       - uses: actions/upload-pages-artifact@v1
         with:
           path: ./build/webroot
-      - uses: actions/deploy-pages@v1
-    # Allow one concurrent deployment
+  web-deploy:
+    needs: web
+    permissions:
+      pages: write  # To deploy to Pages
+      id-token: write  # To verify the deployment originates from an appropriate source
+    environment:
+      # GH recommends this environment name
+      name: github-pages
+      # Export the GitHub Pages URL as the environment's URL
+      url: ${{ steps.deployment.outputs.page_url }}
+    # Allow only one concurrent deployment
     concurrency:
       group: "pages"
       cancel-in-progress: true
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/deploy-pages@v1
+      id: deployment
